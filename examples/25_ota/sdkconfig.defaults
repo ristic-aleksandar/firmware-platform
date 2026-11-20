@@ -1,0 +1,14 @@
+# Defaults for the 25_ota example.
+
+# 4 MB flash with the platform's dual-OTA partition table (ota_0 / ota_1 + otadata).
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="../../partitions.csv"
+
+# Boot a freshly-OTA'd image in "pending verify" so it must be confirmed (or the
+# bootloader rolls back). The demo shows this by calling e32p_ota_mark_valid().
+CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE=y
+
+# Cherry-pick the modules this example uses.
+CONFIG_E32P_OTA_ENABLE=y
+CONFIG_E32P_NVS_ENABLE=y

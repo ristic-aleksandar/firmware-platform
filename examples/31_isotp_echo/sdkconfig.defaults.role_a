@@ -1,0 +1,2 @@
+# Role overlay: node A (tester). See README.md for the build command.
+CONFIG_EX31_ROLE_NODE_A=y

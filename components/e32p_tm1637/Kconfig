@@ -1,0 +1,14 @@
+menu "e32p: tm1637"
+
+    config E32P_TM1637_ENABLE
+        bool "Enable e32p_tm1637 (TM1637 4-digit 7-segment display)"
+        select E32P_GPIO_ENABLE
+        default n
+        help
+            Driver for TM1637-based 4-digit 7-segment displays (clock modules with
+            a colon). The 7-segment font and integer formatting are pure functions
+            (unit-testable headless); the transport bit-bangs the TM1637's I2C-like
+            2-wire protocol (start/stop + per-byte ACK, LSB-first, no address) over
+            two open-drain GPIOs. Selecting this pulls in e32p_gpio.
+
+endmenu

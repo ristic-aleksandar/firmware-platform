@@ -1,0 +1,11 @@
+menu "e32p: nvs"
+
+    config E32P_NVS_ENABLE
+        bool "Enable e32p_nvs (NVS key-value store)"
+        default n
+        help
+            Wrapper over the ESP-IDF NVS flash key-value store: idempotent init
+            (auto-erases on version/space mismatch), a per-namespace handle for
+            efficient grouped access, and one-shot read/write helpers.
+
+endmenu

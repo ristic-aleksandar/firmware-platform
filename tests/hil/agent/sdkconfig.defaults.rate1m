@@ -1,0 +1,4 @@
+# HIL agent overlay: 1 Mbit. Apply after sdkconfig.defaults with its own -B dir and
+# its own -D SDKCONFIG file - see docs/tickets/diagnostics-stack.md section 7.
+# CONFIG_E32P_ISOTP_BITRATE_250K is not set
+CONFIG_E32P_ISOTP_BITRATE_1M=y

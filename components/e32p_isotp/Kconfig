@@ -1,0 +1,83 @@
+menu "e32p: isotp"
+
+    config E32P_ISOTP_ENABLE
+        bool "Enable e32p_isotp (ISO 15765-2 transport)"
+        depends on SOC_TWAI_SUPPORTED
+        select E32P_TWAI_ENABLE
+        default n
+        help
+            ISO 15765-2 (ISO-TP) segmentation over classic CAN: SF / FF / CF /
+            FC, payloads up to 4095 bytes. This is the transport OBD-II and UDS
+            run on. It is NOT SAE J1939-21 TP (see e32p_j1939tp) - a different
+            segmentation scheme with different addressing.
+
+            The engine is driven by an injected frame sink plus a periodic
+            poll(now_ms) tick, so it runs headless and is fully unit-testable.
+
+    # ---- Bench defaults -----------------------------------------------------
+    # Consumed by examples and the HIL agent when they bring the bus up and build
+    # an e32p_isotp_config_t. The ENGINE reads neither choice - everything it
+    # uses comes from e32p_isotp_config_t at runtime.
+
+    choice E32P_ISOTP_BITRATE
+        prompt "Default CAN bitrate for ISO-TP apps"
+        depends on E32P_ISOTP_ENABLE
+        default E32P_ISOTP_BITRATE_250K
+        help
+            The bitrate an app passes to e32p_twai_init(). A CAN bus is a
+            single-bitrate domain: EVERY node must match, including a CANable
+            sniffer. Changing this needs a rebuild and a reflash of every node.
+
+        config E32P_ISOTP_BITRATE_250K
+            bool "250 kbit/s  (this bench's J1939 default - both suites in one session)"
+        config E32P_ISOTP_BITRATE_500K
+            bool "500 kbit/s  (typical OBD-II / ISO 15765-4)"
+        config E32P_ISOTP_BITRATE_1M
+            bool "1 Mbit/s    (raise E32P_TWAI_RX_QUEUE_LEN/TX_QUEUE_LEN with it)"
+    endchoice
+
+    config E32P_ISOTP_BITRATE_BPS
+        int
+        depends on E32P_ISOTP_ENABLE
+        default 250000  if E32P_ISOTP_BITRATE_250K
+        default 500000  if E32P_ISOTP_BITRATE_500K
+        default 1000000 if E32P_ISOTP_BITRATE_1M
+
+    choice E32P_ISOTP_ADDRESSING
+        prompt "Default ISO-TP addressing"
+        depends on E32P_ISOTP_ENABLE
+        default E32P_ISOTP_ADDRESSING_NORMAL_11
+        help
+            Normal 11-bit is the ISO 15765-4 baseline (0x7E0/0x7E8). Normal fixed
+            is the 29-bit form, 0x18DA{TA}{SA} physical / 0x18DB{TA}{SA}
+            functional, which coexists with J1939 on one bus - SAE J1939-73
+            reserves PGN 55808 (0xDA00) for exactly this.
+
+        config E32P_ISOTP_ADDRESSING_NORMAL_11
+            bool "Normal, 11-bit"
+        config E32P_ISOTP_ADDRESSING_NORMAL_FIXED
+            bool "Normal fixed, 29-bit"
+    endchoice
+
+    # ---- Engine tunables ----------------------------------------------------
+
+    config E32P_ISOTP_MAX_MSG_BYTES
+        int "Max ISO-TP payload (bytes)"
+        depends on E32P_ISOTP_ENABLE
+        range 8 4095
+        default 1024
+        help
+            Bounds BOTH buffers of every channel: RAM = 2 x this per channel.
+            1024 matches the reference deployment; example 31 overrides it
+            per-instance to 4095 to demonstrate the spec maximum.
+
+    config E32P_ISOTP_MAX_CHANNELS
+        int "Channels the TWAI link can route to"
+        depends on E32P_ISOTP_ENABLE
+        range 1 8
+        default 4
+        help
+            Upper bound on channels attached to the single TWAI peripheral.
+            An OBD-II server needs two (functional 0x7DF + physical 0x7E0).
+
+endmenu

@@ -1,0 +1,15 @@
+menu "e32p: bmp280"
+
+    config E32P_BMP280_ENABLE
+        bool "Enable e32p_bmp280 (Bosch BMP280 pressure/temperature sensor)"
+        select E32P_I2C_ENABLE
+        default n
+        help
+            Driver for the Bosch BMP280 pressure + temperature sensor over
+            e32p_i2c. The Bosch compensation math (datasheet §3.11.3) is kept as
+            pure functions so it is unit-testable headless against the datasheet
+            reference vector; the thin I2C layer probes the chip id, reads the
+            factory calibration, applies oversampling/filter/mode, and burst-reads
+            samples. Selecting this pulls in e32p_i2c.
+
+endmenu

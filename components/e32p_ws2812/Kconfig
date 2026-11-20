@@ -1,0 +1,14 @@
+menu "e32p: ws2812"
+
+    config E32P_WS2812_ENABLE
+        bool "Enable e32p_ws2812 (WS2812/NeoPixel over RMT)"
+        depends on SOC_RMT_SUPPORTED
+        default n
+        help
+            Addressable-LED driver for WS2812/NeoPixel strips, built on the
+            ESP-IDF v5.x RMT TX driver with a composite (bytes + copy) encoder.
+            Stage pixel colors in a buffer, then refresh() clocks the strip.
+            Works on a bare board (the RMT engine still clocks the frame out);
+            a connected strip is needed to see light.
+
+endmenu

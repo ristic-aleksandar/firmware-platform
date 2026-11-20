@@ -1,0 +1,18 @@
+menu "e32p: uds"
+
+    config E32P_UDS_ENABLE
+        bool "Enable e32p_uds (ISO 14229-1 UDS server)"
+        depends on SOC_TWAI_SUPPORTED
+        select E32P_ISOTP_ENABLE
+        default n
+        help
+            A UDS server over ISO-TP: diagnostic sessions with the S3 timeout,
+            security access with a lockout, data identifiers, trouble codes,
+            routines, and a download path that can reflash the device.
+
+            The server is pure - requests in, responses out through a callback,
+            time injected through poll() - so every timing rule, including the
+            0x78 responsePending cadence, is testable headless. Only the thin
+            transport glue touches ISO-TP.
+
+endmenu

@@ -1,0 +1,2 @@
+# Role overlay: node B (ECU / echo). See README.md for the build command.
+CONFIG_EX31_ROLE_NODE_B=y

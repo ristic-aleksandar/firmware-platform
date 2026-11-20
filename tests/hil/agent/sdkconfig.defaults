@@ -1,0 +1,86 @@
+# Defaults for the HIL test agent.
+
+# 4 MB flash with the platform's dual-OTA partition table (has an nvs partition
+# for the persisted role).
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="../../../partitions.csv"
+
+# --- Tick rate ---------------------------------------------------------------
+# 1000 Hz, not the IDF default of 100. At 100 Hz one tick is 10 ms, so every
+# pdMS_TO_TICKS(n<10) in the agent evaluates to 0 - a busy-spin, not a wait.
+# Three sites relied on that today (hil_can.c:253 bus_down drain, hil_can.c:380
+# TP hand-pump, hil_sys.c:38 event dispatch); two were latent bugs. See
+# docs/tickets/diagnostics-stack.md D-01. e32p_time.h's E32P_ASSERT_BLOCKING_MS
+# turns a future reduction back to 100 into a build error.
+CONFIG_FREERTOS_HZ=1000
+
+# --- TWAI queue depths -------------------------------------------------------
+# Deeper than the IDF default of 5. RX 32 covers a CF burst at 1 Mbit; TX 64 is
+# what keeps a segmented transport from being throughput-capped by the queue
+# rather than by the wire. See docs/tickets/diagnostics-stack.md 4.1.1.
+CONFIG_E32P_TWAI_RX_QUEUE_LEN=32
+CONFIG_E32P_TWAI_TX_QUEUE_LEN=64
+
+# --- Main task stack ---------------------------------------------------------
+# 8 KB, not the IDF default 3584. The OTA verb runs the TLS handshake on the main task and
+# e32p_ota needs about 8 KB; 3584 overflowed on a good handshake (audit R-NET-1).
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=8192
+
+# --- ISO-TP (diagnostics HIL group) ------------------------------------------
+# 250 kbit keeps the ISO-TP tests and the J1939 tests on one bus in one session.
+# HIL_CAN_BITRATE (hil_pins.h) follows this choice, so a rate-sweep build
+# (sdkconfig.defaults.rate500k / .rate1m) moves every CAN test together.
+CONFIG_E32P_ISOTP_ENABLE=y
+CONFIG_E32P_ISOTP_BITRATE_250K=y
+CONFIG_E32P_ISOTP_ADDRESSING_NORMAL_11=y
+# OBD-II server on the companion, OBD-II tester tests on the DUT.
+CONFIG_E32P_OBD2_ENABLE=y
+# UDS server on the companion, UDS tester tests on the DUT.
+CONFIG_E32P_UDS_ENABLE=y
+
+# The agent exercises every module, so enable them all. Selects pull the rest
+# (j1939tp -> j1939 -> twai; espnow -> wifi -> nvs + event).
+CONFIG_E32P_GPIO_ENABLE=y
+CONFIG_E32P_LEDC_ENABLE=y
+CONFIG_E32P_EVENT_ENABLE=y
+CONFIG_E32P_NVS_ENABLE=y
+CONFIG_E32P_SYSINFO_ENABLE=y
+CONFIG_E32P_WDT_ENABLE=y
+CONFIG_E32P_UART_ENABLE=y
+CONFIG_E32P_I2C_ENABLE=y
+CONFIG_E32P_SPI_ENABLE=y
+CONFIG_E32P_ADC_ENABLE=y
+CONFIG_E32P_GPTIMER_ENABLE=y
+CONFIG_E32P_DAC_ENABLE=y
+CONFIG_E32P_TOUCH_ENABLE=y
+CONFIG_E32P_PCNT_ENABLE=y
+CONFIG_E32P_WIFI_ENABLE=y
+CONFIG_E32P_ESPNOW_ENABLE=y
+CONFIG_E32P_TWAI_ENABLE=y
+CONFIG_E32P_I2S_ENABLE=y
+CONFIG_E32P_WS2812_ENABLE=y
+CONFIG_E32P_J1939_ENABLE=y
+CONFIG_E32P_J1939TP_ENABLE=y
+CONFIG_E32P_J1939_ACL_ENABLE=y
+CONFIG_E32P_BMP280_ENABLE=y
+CONFIG_E32P_TM1637_ENABLE=y
+CONFIG_E32P_PM_ENABLE=y
+CONFIG_E32P_MQTT_ENABLE=y
+CONFIG_E32P_MODBUS_ENABLE=y
+CONFIG_E32P_OTA_ENABLE=y
+# e32p_ble: pure adv/UUID parts only (Bluetooth host left OFF to keep the agent
+# lean; the connectable peripheral is the 27_ble demo).
+CONFIG_E32P_BLE_ENABLE=y
+
+# TESTING ONLY: the automated OTA HIL test pulls over plain HTTP from the host's
+# python http.server. Insecure (no server auth) — this is a bench harness, never
+# a product. See components/e32p_ota/README.md "Security & production hardening".
+CONFIG_ESP_HTTPS_OTA_ALLOW_HTTP=y
+
+# --- Bench CA (https OTA test) ---------------------------------------------
+# Adds the HIL bench CA (public cert from tests/hil/host/tools/make_bench_ca.py)
+# to the default FULL CA bundle, so test_net_ota_https can pull from this PC.
+# Test-only CA: trust it in this bench agent only. Path is relative to this folder.
+CONFIG_MBEDTLS_CUSTOM_CERTIFICATE_BUNDLE=y
+CONFIG_MBEDTLS_CUSTOM_CERTIFICATE_BUNDLE_PATH="bench_ca/hil_bench_ca.der"

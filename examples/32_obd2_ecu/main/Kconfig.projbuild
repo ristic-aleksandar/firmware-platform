@@ -1,0 +1,50 @@
+menu "32_obd2_ecu"
+
+    choice EX32_ROLE
+        prompt "Node role"
+        default EX32_ROLE_ECU
+        help
+            ECU answers a scan tool: live data, a VIN, and a trouble code once
+            the simulated engine overheats. TESTER is the other board, asking
+            the same questions a scan tool would and printing the answers.
+            Flash ECU to one board and TESTER to the other, or run ECU alone and
+            drive it from a PC over a CANable.
+
+        config EX32_ROLE_ECU
+            bool "ECU - answers OBD-II requests"
+        config EX32_ROLE_TESTER
+            bool "Tester - polls the ECU and prints decoded values"
+    endchoice
+
+    config EX32_ECU_ADDR
+        int "ECU address"
+        range 16 23
+        default 16
+        help
+            16 (0x10) is the first OBD ECU: requests on 0x7E0, answers on 0x7E8
+            in 11-bit builds, 0x18DA10F1 / 0x18DAF110 in 29-bit ones. Raise it to
+            put several simulated ECUs on one bus.
+
+    config EX32_POLL_MS
+        int "Tester poll period (ms)"
+        range 200 10000
+        default 1000
+        help
+            How often the tester runs one round of requests.
+
+    config EX32_CAN_TX_GPIO
+        int "CAN TX GPIO"
+        default 4 if IDF_TARGET_ESP32S3
+        default 21
+        help
+            TWAI (CAN) TX pin, wired to the transceiver's TXD. Defaults match the
+            bench pin map per chip (WROOM 21, S3 4 - the S3 has no GPIO 22-25).
+
+    config EX32_CAN_RX_GPIO
+        int "CAN RX GPIO"
+        default 5 if IDF_TARGET_ESP32S3
+        default 22
+        help
+            TWAI (CAN) RX pin, wired to the transceiver's RXD (WROOM 22, S3 5).
+
+endmenu

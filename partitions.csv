@@ -1,0 +1,19 @@
+# ESP32 Platform default partition table.
+# Target: 4 MB flash (ESP-WROOM-32) with dual OTA app slots.
+#
+# Layout (offsets/sizes in bytes):
+#   nvs       24 KB   key-value storage (Wi-Fi calibration, app settings)
+#   otadata    8 KB   which OTA slot to boot
+#   phy_init   4 KB   RF/PHY calibration data
+#   ota_0    1.5 MB   app slot A (the app boots here when otadata is blank)
+#   ota_1    1.5 MB   app slot B (OTA target)
+#   storage  896 KB   SPIFFS/LittleFS/FAT data
+#
+# App slots must start on a 0x10000 boundary. Total = 0x400000 (4 MB).
+# Name,     Type, SubType, Offset,   Size,     Flags
+nvs,        data, nvs,     0x9000,   0x6000,
+otadata,    data, ota,     0xf000,   0x2000,
+phy_init,   data, phy,     0x11000,  0x1000,
+ota_0,      app,  ota_0,   0x20000,  0x180000,
+ota_1,      app,  ota_1,   0x1a0000, 0x180000,
+storage,    data, spiffs,  0x320000, 0xe0000,

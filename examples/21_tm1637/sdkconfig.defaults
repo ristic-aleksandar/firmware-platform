@@ -1,0 +1,9 @@
+# Defaults for the 21_tm1637 example.
+
+# 4 MB flash with the platform's dual-OTA partition table.
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="../../partitions.csv"
+
+# Cherry-pick the modules this example uses (tm1637 selects gpio).
+CONFIG_E32P_TM1637_ENABLE=y

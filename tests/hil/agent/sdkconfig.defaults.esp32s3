@@ -1,0 +1,13 @@
+# ESP32-S3-specific overrides for the HIL agent (applied on top of
+# sdkconfig.defaults when the target is esp32s3).
+#
+# These three modules use ESP32-only driver APIs, so they're disabled for the S3
+# build and their HIL tests (periph_dac / periph_touch / periph_adc) report
+# "skipped" on this target (guarded in hil_periph.c):
+#   - e32p_dac  : the S3 has no DAC peripheral at all.
+#   - e32p_touch: uses the ESP32 v1 touch_pad API (the S3 has touch v2).
+#   - e32p_adc  : uses the line-fitting ADC calibration scheme (the S3 uses
+#                 curve-fitting). A target-aware port would re-enable it.
+CONFIG_E32P_DAC_ENABLE=n
+CONFIG_E32P_TOUCH_ENABLE=n
+CONFIG_E32P_ADC_ENABLE=n

@@ -1,0 +1,23 @@
+menu "26_ota_http example"
+
+    config EXAMPLE_WIFI_SSID
+        string "Wi-Fi SSID"
+        default ""
+        help
+            Your Wi-Fi network name (set via `idf.py menuconfig`, not in source).
+
+    config EXAMPLE_WIFI_PASSWORD
+        string "Wi-Fi password"
+        default ""
+        help
+            Wi-Fi passphrase. Leave empty for an open network.
+
+    config EXAMPLE_OTA_URL
+        string "OTA firmware URL"
+        default "http://192.168.0.41:8080/ota_http.bin"
+        help
+            HTTP(S) URL of the .bin to pull. For a local test, serve the build
+            directory with `python -m http.server 8080` and point this at your
+            PC's IP. https:// needs the app to provide TLS certificates.
+
+endmenu

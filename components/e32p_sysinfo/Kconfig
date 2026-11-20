@@ -1,0 +1,10 @@
+menu "e32p: sysinfo"
+
+    config E32P_SYSINFO_ENABLE
+        bool "Enable e32p_sysinfo (system introspection)"
+        default n
+        help
+            Read-only helpers for chip / app identity, reset reason, uptime, and
+            heap stats, plus a one-call boot summary log. No init required.
+
+endmenu

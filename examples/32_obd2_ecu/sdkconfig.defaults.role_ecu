@@ -1,0 +1,2 @@
+# Role overlay: the ECU that answers a scan tool. See README.md.
+CONFIG_EX32_ROLE_ECU=y

@@ -1,0 +1,3 @@
+# The signing key is the root of trust — never commit it. This one is a throwaway
+# TEST key; generate your own for anything real and keep it in an HSM/secret store.
+*.pem

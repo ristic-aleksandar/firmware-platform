@@ -1,0 +1,6 @@
+# Example manifest — uncomment and edit only if this module pulls a managed
+# component from the ESP Component Registry. Delete this file if not needed.
+#
+# dependencies:
+#   joltwallet/littlefs: "^1.14.0"
+#   idf: ">=5.3.1"

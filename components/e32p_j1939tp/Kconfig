@@ -1,0 +1,32 @@
+menu "e32p: j1939tp"
+
+    config E32P_J1939TP_ENABLE
+        bool "Enable e32p_j1939tp (J1939-21 Transport Protocol)"
+        depends on SOC_TWAI_SUPPORTED
+        select E32P_J1939_ENABLE
+        default n
+        help
+            J1939-21 Transport Protocol over e32p_j1939: segments and reassembles
+            9..1785 byte messages via BAM (broadcast) and RTS/CTS (connection
+            mode), transmit and receive. The engine is driven by an injected
+            frame sink plus a periodic poll(now_ms) tick, so it runs headless and
+            is fully unit-testable. Selecting this pulls in e32p_j1939 (and TWAI).
+
+    config E32P_J1939TP_MAX_MSG_BYTES
+        int "Max multi-packet message size (bytes)"
+        depends on E32P_J1939TP_ENABLE
+        range 9 1785
+        default 1785
+        help
+            Bounds each session buffer (one TX + N RX). Lower it to save RAM if
+            your application never transfers large messages.
+
+    config E32P_J1939TP_MAX_RX_SESSIONS
+        int "Concurrent inbound TP sessions"
+        depends on E32P_J1939TP_ENABLE
+        range 1 8
+        default 2
+        help
+            Number of simultaneous inbound transfers (keyed by source address).
+
+endmenu

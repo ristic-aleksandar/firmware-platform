@@ -1,0 +1,3 @@
+# The bench signing key is a throwaway test key. Never commit it.
+# A product key lives in a signing service, not in this folder.
+*.pem

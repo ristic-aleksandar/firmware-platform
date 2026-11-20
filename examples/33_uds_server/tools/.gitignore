@@ -1,0 +1,2 @@
+# The UDS security secret written by "uds_client.py provision". Never commit it.
+.uds_secret

@@ -1,0 +1,12 @@
+menu "e32p: i2s"
+
+    config E32P_I2S_ENABLE
+        bool "Enable e32p_i2s (I2S standard-mode audio)"
+        depends on SOC_I2S_SUPPORTED
+        default n
+        help
+            Facade over the ESP-IDF v5.x I2S standard (Philips) mode: one channel
+            per handle, TX (playback) or RX (capture), with PCM read/write. Needs
+            an external I2S DAC (playback) or mic (capture).
+
+endmenu

@@ -1,0 +1,11 @@
+menu "e32p: adc"
+
+    config E32P_ADC_ENABLE
+        bool "Enable e32p_adc (oneshot ADC)"
+        default n
+        help
+            Oneshot ADC facade with per-channel attenuation and optional
+            line-fitting calibration to millivolts. One handle per ADC unit.
+            Note: ADC2 cannot be read while Wi-Fi is active.
+
+endmenu

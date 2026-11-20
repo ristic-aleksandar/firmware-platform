@@ -1,0 +1,4 @@
+# Bitrate overlay: 250 kbit/s, the rate the HIL bench is proven at.
+# Apply after sdkconfig.defaults and a role overlay - see README.md.
+# CONFIG_E32P_ISOTP_BITRATE_500K is not set
+CONFIG_E32P_ISOTP_BITRATE_250K=y

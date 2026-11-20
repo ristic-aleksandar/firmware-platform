@@ -1,0 +1,19 @@
+# PC-side HIL harness (Python). Pinned to the versions the HIL suite is run with
+# (the global Python 3.12 install; the suite needs udsoncan, so use that interpreter
+# or a venv built from this file):
+#   python -m venv .venv && .venv\Scripts\activate && pip install -r requirements.txt
+pytest==9.1.1
+pytest-embedded==2.8.1
+pytest-embedded-idf==2.8.1
+pytest-embedded-serial-esp==2.8.1
+# Raw serial link to the boards (conftest.py); also a dependency of pytest-embedded.
+pyserial==3.5
+# Only needed for the MQTT network test (test_net_mqtt.py); imported lazily.
+paho-mqtt==2.1.0
+# Only needed for the CANable interop tests (test_isotp_canable.py); imported lazily.
+python-can==4.6.1
+can-isotp==2.0.7
+# Only needed for the UDS tests that use udsoncan (test_uds_canable.py); imported lazily.
+udsoncan==1.26.1
+# Only needed for the https OTA test (test_net_ota_https) and tools/make_bench_ca.py.
+cryptography==50.0.0

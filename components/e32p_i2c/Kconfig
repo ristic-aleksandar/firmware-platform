@@ -1,0 +1,11 @@
+menu "e32p: i2c"
+
+    config E32P_I2C_ENABLE
+        bool "Enable e32p_i2c (I2C master facade)"
+        default n
+        help
+            Bus + device facade over the ESP-IDF v5.x i2c_master driver: create a
+            bus, probe / scan for devices, attach devices, and do byte / register
+            transfers. Requires the new driver (not the legacy driver/i2c.h).
+
+endmenu

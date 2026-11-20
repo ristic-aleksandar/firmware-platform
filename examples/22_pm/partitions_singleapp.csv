@@ -1,0 +1,15 @@
+# Single-app partition table for the 22_pm low-power demo.
+#
+# The platform's shared ../../partitions.csv is a dual-OTA layout (ota_0/ota_1 +
+# otadata). This demo never does OTA, and on a deep-sleep wake the bootloader
+# re-reads otadata and logs a benign "ota data partition invalid" error before
+# falling back to the app. A single "factory" app (no OTA slots, no otadata)
+# removes that lookup entirely, so the deep-sleep boot log stays clean.
+#
+# "factory" is simply the one, real application partition (historical ESP-IDF
+# name) — not a placeholder. The app boots from here directly every time.
+#
+# Name,     Type, SubType, Offset,   Size,     Flags
+nvs,        data, nvs,     0x9000,   0x6000,
+phy_init,   data, phy,     0xf000,   0x1000,
+factory,    app,  factory, 0x10000,  0x180000,

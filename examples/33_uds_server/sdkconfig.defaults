@@ -1,0 +1,33 @@
+# This example uses the e32p UDS stack and, for the real reflash, e32p_ota.
+CONFIG_E32P_TWAI_ENABLE=y
+CONFIG_E32P_ISOTP_ENABLE=y
+CONFIG_E32P_UDS_ENABLE=y
+CONFIG_E32P_NVS_ENABLE=y
+CONFIG_E32P_OTA_ENABLE=y
+
+# 500 kbit is what vehicles and PC diagnostic tools expect. Every node on the bus
+# must match, including a CANable. On the HIL bench, which runs at 250 kbit, add
+# sdkconfig.defaults.bench250k (see README).
+CONFIG_E32P_ISOTP_BITRATE_500K=y
+
+# 4 MB flash with the platform's dual-OTA partition table: the reflash writes the
+# slot the app is not running from.
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="../../partitions.csv"
+
+# Roll back an image that never confirms itself (the reflash safety net).
+CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE=y
+
+# The app version, reported by DID F195 and the @EX33 READY line. The reflash test
+# downloads a second build with another version (sdkconfig.defaults.version_b), so
+# the two images can be told apart.
+CONFIG_APP_PROJECT_VER_FROM_CONFIG=y
+CONFIG_APP_PROJECT_VER="33-0.1.0"
+
+# 1 ms tick: CF pacing and the pump's idle block follow the tick period.
+CONFIG_FREERTOS_HZ=1000
+
+# Deeper TWAI queues so a CF burst is bounded by the wire, not the queue.
+CONFIG_E32P_TWAI_RX_QUEUE_LEN=32
+CONFIG_E32P_TWAI_TX_QUEUE_LEN=64

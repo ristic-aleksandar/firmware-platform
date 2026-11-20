@@ -1,0 +1,16 @@
+menu "e32p: wifi"
+
+    config E32P_WIFI_ENABLE
+        bool "Enable e32p_wifi (Station + SoftAP facade)"
+        default n
+        # Inter-module deps: e32p_wifi's .c calls into e32p_nvs and e32p_event.
+        # Those modules compile their source only when their own ENABLE is set, so
+        # a plain REQUIRES is not enough — select forces them on.
+        select E32P_NVS_ENABLE
+        select E32P_EVENT_ENABLE
+        help
+            Facade over esp_wifi: connect as a Station (blocking, auto-reconnect)
+            or start a SoftAP, with netif / event-loop / NVS handled internally.
+            Requires a SoC with Wi-Fi (ESP32, S2, S3, C3, C6).
+
+endmenu

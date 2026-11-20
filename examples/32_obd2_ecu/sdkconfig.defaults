@@ -1,0 +1,19 @@
+# This example uses the e32p OBD-II stack; enable its sources.
+# (E32P_OBD2_ENABLE selects E32P_ISOTP_ENABLE, which selects E32P_TWAI_ENABLE,
+# but set them all for clarity.)
+CONFIG_E32P_TWAI_ENABLE=y
+CONFIG_E32P_ISOTP_ENABLE=y
+CONFIG_E32P_OBD2_ENABLE=y
+CONFIG_E32P_NVS_ENABLE=y
+
+# 500 kbit is what PC diagnostic tools expect for OBD-II / ISO 15765-4. Every
+# node on the bus must match, including a CANable sniffer.
+CONFIG_E32P_ISOTP_BITRATE_500K=y
+
+# 1 ms tick: CF pacing and the pump's idle block follow the tick period.
+# See docs/tickets/diagnostics-stack.md D-01.
+CONFIG_FREERTOS_HZ=1000
+
+# Deeper TWAI queues so a CF burst is bounded by the wire, not the queue.
+CONFIG_E32P_TWAI_RX_QUEUE_LEN=32
+CONFIG_E32P_TWAI_TX_QUEUE_LEN=64

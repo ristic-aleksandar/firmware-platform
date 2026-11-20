@@ -1,0 +1,17 @@
+# Defaults for the 27_ble example.
+
+# 4 MB flash with the platform's dual-OTA partition table.
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="../../partitions.csv"
+
+# Bluetooth host = NimBLE (BLE only). This is what compiles the radio path in
+# e32p_ble; without it the module builds but returns ESP_ERR_NOT_SUPPORTED.
+CONFIG_BT_ENABLED=y
+CONFIG_BT_NIMBLE_ENABLED=y
+# Persist bond keys in NVS so pairing completes and survives reboots.
+CONFIG_BT_NIMBLE_NVS_PERSIST=y
+
+# Cherry-pick the modules this example uses (nvs holds BLE PHY cal + bond keys).
+CONFIG_E32P_BLE_ENABLE=y
+CONFIG_E32P_NVS_ENABLE=y

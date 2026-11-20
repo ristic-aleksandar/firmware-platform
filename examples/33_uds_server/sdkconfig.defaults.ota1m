@@ -1,0 +1,17 @@
+# Real-reflash overlay: 1 Mbit, and a download goes into the other firmware slot.
+# Every node on the bus must run at 1 Mbit, including the CANable (see README).
+# CONFIG_E32P_ISOTP_BITRATE_500K is not set
+CONFIG_E32P_ISOTP_BITRATE_1M=y
+# CONFIG_EX33_SINK_RAM is not set
+CONFIG_EX33_SINK_OTA=y
+
+# Signed OTA with no eFuses: the running image refuses a downloaded image that is not
+# signed with the bench key. Nothing is burned. To undo it, remove these lines here and from the generated
+# sdkconfig.ota1m and sdkconfig.ota1m_b (or delete those files), rebuild and reflash over USB.
+# The bench key (secure_boot_signing_key.pem, git-ignored) is a throwaway test key.
+# Same setup as example 28. An ESP32 build at minimum chip revision 0 allows only the
+# ECDSA (v1) scheme.
+CONFIG_SECURE_SIGNED_APPS_NO_SECURE_BOOT=y
+CONFIG_SECURE_SIGNED_APPS_ECDSA_SCHEME=y
+CONFIG_SECURE_SIGNED_ON_UPDATE_NO_SECURE_BOOT=y
+CONFIG_SECURE_BOOT_SIGNING_KEY="secure_boot_signing_key.pem"

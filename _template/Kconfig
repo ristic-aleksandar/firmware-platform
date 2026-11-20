@@ -1,0 +1,11 @@
+menu "e32p: foo (TEMPLATE)"
+
+    config E32P_FOO_ENABLE
+        bool "Enable e32p_foo (template)"
+        default n
+        help
+            Example enable switch. Copy this file when creating a new module and
+            rename FOO/foo to your module name. Add `depends on SOC_<FEATURE>_SUPPORTED`
+            for chip-specific peripherals so disabled targets hide the option.
+
+endmenu

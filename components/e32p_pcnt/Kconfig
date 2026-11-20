@@ -1,0 +1,12 @@
+menu "e32p: pcnt"
+
+    config E32P_PCNT_ENABLE
+        bool "Enable e32p_pcnt (pulse counter)"
+        depends on SOC_PCNT_SUPPORTED
+        default n
+        help
+            Facade over the ESP-IDF v5.x pulse counter: count rising/falling edges
+            on a GPIO, with an optional io_loop_back test mode (feed the GPIO's own
+            output back to its input, so gpio_set_level generates counts).
+
+endmenu

@@ -1,0 +1,3 @@
+# The image a reflash test downloads: the same firmware under another version, so
+# DID F195 and the @EX33 READY line show which image is running.
+CONFIG_APP_PROJECT_VER="33-0.2.0"

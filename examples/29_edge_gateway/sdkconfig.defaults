@@ -1,0 +1,27 @@
+# Defaults for the 29_edge_gateway flagship.
+
+# 4 MB flash, dual-OTA partition table (the gateway supports remote update).
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="../../partitions.csv"
+CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE=y
+
+# BLE (NimBLE) for first-boot provisioning; Wi-Fi + MQTT for the cloud uplink.
+# The two radios run in separate phases (BLE only while unprovisioned; Wi-Fi once
+# provisioned, with a reboot in between), so they never contend for RAM at once.
+CONFIG_BT_ENABLED=y
+CONFIG_BT_NIMBLE_ENABLED=y
+CONFIG_BT_NIMBLE_NVS_PERSIST=y
+
+# Cherry-pick the modules the gateway composes.
+CONFIG_E32P_WIFI_ENABLE=y
+CONFIG_E32P_MQTT_ENABLE=y
+CONFIG_E32P_BLE_ENABLE=y
+CONFIG_E32P_NVS_ENABLE=y
+CONFIG_E32P_OTA_ENABLE=y
+CONFIG_E32P_TWAI_ENABLE=y
+CONFIG_E32P_J1939_ENABLE=y
+CONFIG_E32P_TM1637_ENABLE=y
+CONFIG_E32P_WDT_ENABLE=y
+CONFIG_E32P_SYSINFO_ENABLE=y
+CONFIG_E32P_GPIO_ENABLE=y

@@ -1,0 +1,12 @@
+menu "e32p: ledc"
+
+    config E32P_LEDC_ENABLE
+        bool "Enable e32p_ledc (PWM facade)"
+        depends on SOC_LEDC_SUPPORTED
+        default n
+        help
+            Opaque-handle wrapper over the ESP-IDF LEDC driver: one handle per
+            PWM channel, with duty control and hardware fade. Hidden on targets
+            that have no LEDC peripheral.
+
+endmenu

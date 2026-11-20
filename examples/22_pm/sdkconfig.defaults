@@ -1,0 +1,11 @@
+# Defaults for the 22_pm example.
+
+# 4 MB flash. This demo uses a single-app (factory, no-OTA) partition table so
+# the deep-sleep boot log stays clean — a dual-OTA table logs a benign
+# "ota data partition invalid" error on every deep-sleep wake. See the CSV.
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions_singleapp.csv"
+
+# Cherry-pick the module this example uses.
+CONFIG_E32P_PM_ENABLE=y

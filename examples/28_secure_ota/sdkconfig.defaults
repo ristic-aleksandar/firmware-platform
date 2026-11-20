@@ -1,0 +1,24 @@
+# Defaults for the 28_secure_ota example.
+
+# 4 MB flash with the platform's dual-OTA partition table.
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="../../partitions.csv"
+CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE=y
+
+# --- Signed OTA (no Secure Boot, no eFuses — safe + reversible) ---
+# Every OTA image must carry a valid signature made with our private key, or the
+# update is rejected. This protects against network-based firmware spoofing
+# WITHOUT burning eFuses. Full hardware Secure Boot v2 + Flash Encryption (which
+# DO burn eFuses and are irreversible) are documented in docs/SECURITY_HARDENING.md.
+#
+# ESP32 chip rev <3 supports the ECDSA (v1-style) scheme; rev 3 / S2 / S3 / C3
+# would use RSA (v2). Generate the key once:
+#   espsecure.py generate_signing_key --version 1 --scheme ecdsa256 secure_boot_signing_key.pem
+CONFIG_SECURE_SIGNED_APPS_NO_SECURE_BOOT=y
+CONFIG_SECURE_SIGNED_APPS_ECDSA_SCHEME=y
+CONFIG_SECURE_SIGNED_ON_UPDATE_NO_SECURE_BOOT=y
+CONFIG_SECURE_BOOT_SIGNING_KEY="secure_boot_signing_key.pem"
+
+# Cherry-pick the module this example uses.
+CONFIG_E32P_OTA_ENABLE=y

@@ -1,0 +1,10 @@
+# Defaults for the 11_pcnt_count example.
+
+# 4 MB flash with the platform's dual-OTA partition table.
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="../../partitions.csv"
+
+# Cherry-pick the modules this example uses.
+CONFIG_E32P_PCNT_ENABLE=y
+CONFIG_E32P_GPIO_ENABLE=y

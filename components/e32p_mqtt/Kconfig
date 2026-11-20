@@ -1,0 +1,14 @@
+menu "e32p: mqtt"
+
+    config E32P_MQTT_ENABLE
+        bool "Enable e32p_mqtt (MQTT v3.1.1 client)"
+        default n
+        help
+            MQTT client facade over ESP-IDF's esp-mqtt: client lifecycle,
+            publish/subscribe, connection state, and a compact event callback.
+            The MQTT topic-filter matching (+/# wildcards, $-topic rule) is a pure
+            function and is unit-tested headless; the network path needs Wi-Fi (or
+            another netif) and a broker. Does not select a transport — the
+            application provides connectivity (e.g. e32p_wifi).
+
+endmenu

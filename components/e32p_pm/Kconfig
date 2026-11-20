@@ -1,0 +1,13 @@
+menu "e32p: pm"
+
+    config E32P_PM_ENABLE
+        bool "Enable e32p_pm (low-power sleep + wake sources)"
+        default n
+        help
+            Low-power facade over esp_sleep: configure wake sources (timer, ext0,
+            ext1, GPIO, touch), enter light or deep sleep, and report the wake
+            cause with a friendly enum. Adds argument validation and RTC-pin
+            checks over the raw API. Light sleep returns and is unit-tested
+            on-target; deep sleep resets the chip. No other e32p modules required.
+
+endmenu

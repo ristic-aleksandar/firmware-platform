@@ -1,0 +1,61 @@
+menu "29_edge_gateway"
+
+    config GW_SOURCE_J1939
+        bool "Read a real J1939/CAN bus (needs a transceiver)"
+        default n
+        help
+            When set, the gateway reads live J1939 frames over e32p_twai +
+            e32p_j1939 — this needs an SN65HVD230-class CAN transceiver wired to
+            the pins below. When unset (the default), a built-in simulator
+            produces J1939-shaped signals so the whole cloud / provisioning
+            path can be demonstrated with no extra hardware. Flip this on once the
+            transceiver is in hand.
+
+    config GW_CAN_TX_GPIO
+        int "CAN TX GPIO"
+        default 5
+        help
+            TWAI (CAN) TX pin. Avoid the strapping pins (0, 2, 12, 15).
+
+    config GW_CAN_RX_GPIO
+        int "CAN RX GPIO"
+        default 4
+        help
+            TWAI (CAN) RX pin.
+
+    config GW_STATUS_LED_GPIO
+        int "Status LED GPIO"
+        default 2
+        help
+            Solid = cloud connected. The DevKit's onboard LED is GPIO2, so this
+            needs no wiring by default.
+
+    config GW_TM1637_CLK_GPIO
+        int "TM1637 CLK GPIO (optional display)"
+        default 18
+
+    config GW_TM1637_DIO_GPIO
+        int "TM1637 DIO GPIO (optional display)"
+        default 19
+
+    config GW_FALLBACK_WIFI_SSID
+        string "Fallback Wi-Fi SSID (testing only)"
+        default ""
+        help
+            Optional convenience for bench testing. If BLE provisioning has not
+            stored a config yet AND this is non-empty, the gateway uses these
+            build-time credentials so you can exercise the cloud path without a
+            phone. Leave empty to force BLE provisioning. Nothing is hardcoded in
+            source — these live in your local sdkconfig only.
+
+    config GW_FALLBACK_WIFI_PASSWORD
+        string "Fallback Wi-Fi password (testing only)"
+        default ""
+
+    config GW_FALLBACK_BROKER_URI
+        string "Fallback MQTT broker URI (testing only)"
+        default "mqtt://test.mosquitto.org:1883"
+        help
+            Used together with the fallback SSID above.
+
+endmenu

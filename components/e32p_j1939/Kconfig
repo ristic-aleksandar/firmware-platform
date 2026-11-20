@@ -1,0 +1,16 @@
+menu "e32p: j1939"
+
+    config E32P_J1939_ENABLE
+        bool "Enable e32p_j1939 (SAE J1939 protocol layer)"
+        depends on SOC_TWAI_SUPPORTED
+        select E32P_TWAI_ENABLE
+        default n
+        help
+            SAE J1939 protocol/data layer over e32p_twai: 29-bit CAN ID <-> PGN
+            codec (PDU1/PDU2), source/destination addressing, and single-frame
+            (<=8 byte) send/receive. The application configures and starts TWAI;
+            this layer adds the J1939 node address and message framing. Transport
+            (>8 byte messages) is provided by e32p_j1939tp. Selecting this pulls
+            in e32p_twai.
+
+endmenu

@@ -1,0 +1,11 @@
+menu "e32p: dac"
+
+    config E32P_DAC_ENABLE
+        bool "Enable e32p_dac (8-bit DAC output)"
+        depends on SOC_DAC_SUPPORTED
+        default n
+        help
+            Oneshot 8-bit DAC output on ESP32 channels ch0 (GPIO25) / ch1
+            (GPIO26). Hidden on targets without a DAC (S2 has it; S3/C3/C6 do not).
+
+endmenu

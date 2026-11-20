@@ -1,0 +1,70 @@
+menu "33_uds_server"
+
+    choice EX33_SINK
+        prompt "Where a download goes"
+        default EX33_SINK_RAM
+        help
+            RAM keeps the downloaded image in memory and checks its CRC-32: safe to
+            run anywhere, and the erase still takes a few seconds so the 0x78
+            "please wait" exchange happens for real. OTA writes the image into the
+            other firmware slot and boots it after an ECU reset - a real reflash,
+            with rollback if the new image never confirms itself.
+
+        config EX33_SINK_RAM
+            bool "RAM - keep the image in memory and check it"
+        config EX33_SINK_OTA
+            bool "OTA - write the other slot and boot it (real reflash)"
+    endchoice
+
+    config EX33_RAM_SINK_SIZE
+        int "RAM sink size (bytes)"
+        depends on EX33_SINK_RAM
+        range 1024 131072
+        default 32768
+
+    config EX33_ERASE_MS
+        int "RAM sink: simulated erase time (ms)"
+        depends on EX33_SINK_RAM
+        range 0 20000
+        default 2000
+        help
+            Long enough that the server must answer "please wait" (0x78) first.
+
+    config EX33_CONSOLE_PROVISIONING
+        bool "Accept 'provision <secret>' on the USB serial console"
+        default y
+        help
+            How the security-access secret reaches the device: uds_client.py
+            provision writes it over the USB serial console. This is the only
+            way a secret gets onto the device.
+
+            Provisioning is one-time. When a secret is already stored, the
+            console answers "@PROVISION REFUSED" and writes nothing. Giving a
+            bench board a new secret is an owner action (the stored secret must
+            be removed first; see the README).
+
+            Physical access to the USB port is the trust boundary - fine on a
+            bench, NOT for a product. A product must not ship with this unlocked:
+            turn it off in any production build (item 1 of the required security
+            audit in docs/SECURITY_HARDENING.md).
+
+    config EX33_ECU_ADDR
+        int "ECU address"
+        range 16 23
+        default 17
+        help
+            17 (0x11): requests on 0x7E1, answers on 0x7E9 in 11-bit builds,
+            0x18DA11F1 / 0x18DAF111 in 29-bit ones. OBD-II uses 0x10, so both can
+            share a bus.
+
+    config EX33_CAN_TX_GPIO
+        int "CAN TX GPIO"
+        default 4 if IDF_TARGET_ESP32S3
+        default 21
+
+    config EX33_CAN_RX_GPIO
+        int "CAN RX GPIO"
+        default 5 if IDF_TARGET_ESP32S3
+        default 22
+
+endmenu

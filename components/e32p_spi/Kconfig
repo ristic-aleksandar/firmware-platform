@@ -1,0 +1,11 @@
+menu "e32p: spi"
+
+    config E32P_SPI_ENABLE
+        bool "Enable e32p_spi (SPI master facade)"
+        default n
+        help
+            Bus + device facade over the ESP-IDF v5.x spi_master driver: init a
+            host bus, attach devices (own CS / clock / mode), and do full-duplex
+            or one-way transfers. Uses SPI2/SPI3 (SPI1 is the flash bus).
+
+endmenu

@@ -1,0 +1,15 @@
+menu "e32p: ble"
+
+    config E32P_BLE_ENABLE
+        bool "Enable e32p_ble (BLE GATT peripheral over NimBLE)"
+        default n
+        help
+            BLE peripheral facade: advertise a named device with one custom
+            service and characteristics (read/write/notify). The advertising
+            payload assembly and UUID helpers are pure and unit-tested headless.
+            The radio path is compiled only when the NimBLE host is enabled
+            (Component config -> Bluetooth -> Bluetooth enabled + Host = NimBLE,
+            i.e. CONFIG_BT_NIMBLE_ENABLED). Without it, the device functions return
+            ESP_ERR_NOT_SUPPORTED so the module still builds in radio-free targets.
+
+endmenu

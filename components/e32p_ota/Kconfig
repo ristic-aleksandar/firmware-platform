@@ -1,0 +1,14 @@
+menu "e32p: ota"
+
+    config E32P_OTA_ENABLE
+        bool "Enable e32p_ota (over-the-air firmware update)"
+        default n
+        help
+            Firmware update over esp_ota_ops + esp_https_ota: query the running
+            slot / app version / image size, control rollback, stream an image
+            into the next slot from any source, or pull one from an HTTP(S) URL.
+            Requires an OTA-capable partition table (otadata + ota_0/ota_1) — the
+            platform's default partitions.csv provides one. The query and rollback
+            layer is unit-tested offline; the download path needs a network.
+
+endmenu

@@ -1,0 +1,30 @@
+menu "e32p: core (platform-wide)"
+
+    config E32P_PIN_GUARDS
+        bool "Reject reserved pins (GPIO6-11) and warn on strapping pins (GPIO0/2/12/15)"
+        default y
+        help
+            When enabled, GPIO-using platform modules return
+            ESP_ERR_E32P_PIN_RESERVED for SPI-flash pins (GPIO6-11) and log a
+            warning when a strapping pin (GPIO0/2/12/15) is requested for I/O.
+            Disable only if you fully understand the boot-strap consequences.
+
+    config E32P_PRODUCT_BUILD
+        bool "Product build (refuse to compile bench and demo code)"
+        default n
+        help
+            Set this only for a build that may ship to a customer. Bench and
+            demo projects, and modules with bench-only options, check the derived
+            E32P_BENCH_FORBIDDEN and stop with a compile error (for example
+            the HIL test agent and the OTA demos).
+            It burns nothing and changes no runtime behaviour.
+
+    # Derived, no prompt. Bench guards test this symbol, not the marker alone.
+    # Fail-closed: a build with Secure Boot or Flash Encryption on counts as a
+    # product even if E32P_PRODUCT_BUILD was forgotten. SECURE_SIGNED_APPS_* is
+    # deliberately NOT a trigger: bench examples (28, 33) use signed OTA.
+    config E32P_BENCH_FORBIDDEN
+        bool
+        default y if E32P_PRODUCT_BUILD || SECURE_BOOT || SECURE_FLASH_ENC_ENABLED
+
+endmenu

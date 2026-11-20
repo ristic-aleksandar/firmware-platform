@@ -1,0 +1,9 @@
+# Defaults for the 17_j1939_send example.
+
+# 4 MB flash with the platform's dual-OTA partition table.
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="../../partitions.csv"
+
+# Cherry-pick the modules this example uses (j1939 selects twai).
+CONFIG_E32P_J1939_ENABLE=y

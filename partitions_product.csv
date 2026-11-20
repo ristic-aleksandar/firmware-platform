@@ -1,0 +1,31 @@
+# ESP32 Platform product partition table (example 33 product overlay).
+# Same as partitions.csv, plus one 4 KB partition for the NVS encryption keys.
+# The OTA slots and the storage partition stay where they are. Target: 4 MB flash.
+#
+# The partition table itself moves from 0x8000 to 0xf000 (set in the overlay with
+# CONFIG_PARTITION_TABLE_OFFSET). With Secure Boot v2 and Flash Encryption the
+# bootloader is 40 KB or more, and the default 0x8000 allows only 28 KB. This was
+# measured with the pinned ESP-IDF v5.3.1 (see docs/SECURITY_HARDENING.md). The
+# three small data partitions move up behind the table.
+#
+# Layout (offsets/sizes in bytes):
+#   (partition table  4 KB at 0xf000)
+#   nvs       24 KB   key-value storage (encrypted with the keys below when NVS
+#                     encryption is on)
+#   otadata    8 KB   which OTA slot to boot
+#   phy_init   4 KB   RF/PHY calibration data
+#   nvs_keys   4 KB   keys that encrypt the nvs partition; the "encrypted" flag
+#                     keeps them encrypted by Flash Encryption
+#   ota_0    1.5 MB   app slot A
+#   ota_1    1.5 MB   app slot B (OTA target)
+#   storage  896 KB   SPIFFS/LittleFS/FAT data
+#
+# App slots must start on a 0x10000 boundary. Total = 0x400000 (4 MB).
+# Name,     Type, SubType,  Offset,   Size,     Flags
+nvs,        data, nvs,      0x10000,  0x6000,
+otadata,    data, ota,      0x16000,  0x2000,
+phy_init,   data, phy,      0x18000,  0x1000,
+nvs_keys,   data, nvs_keys, 0x19000,  0x1000,   encrypted
+ota_0,      app,  ota_0,    0x20000,  0x180000,
+ota_1,      app,  ota_1,    0x1a0000, 0x180000,
+storage,    data, spiffs,   0x320000, 0xe0000,

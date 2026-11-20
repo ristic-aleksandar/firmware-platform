@@ -1,0 +1,11 @@
+menu "e32p: event"
+
+    config E32P_EVENT_ENABLE
+        bool "Enable e32p_event (default event loop)"
+        default n
+        help
+            Singleton wrapper over the ESP-IDF default event loop: idempotent
+            init/deinit plus register / unregister / post helpers. Required by
+            Wi-Fi and most connectivity modules.
+
+endmenu

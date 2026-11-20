@@ -1,0 +1,15 @@
+menu "e32p: modbus"
+
+    config E32P_MODBUS_ENABLE
+        bool "Enable e32p_modbus (Modbus RTU master + protocol core)"
+        select E32P_UART_ENABLE
+        default n
+        help
+            Modbus RTU master over e32p_uart with the common function codes (0x03
+            read holding, 0x04 read input, 0x06 write single, 0x10 write multiple).
+            The protocol core (CRC-16/Modbus, ADU framing, request build, response
+            parse) and a pure slave request handler are unit-tested headless — a
+            full master<->slave exchange runs with no wire. Selecting this pulls in
+            e32p_uart.
+
+endmenu

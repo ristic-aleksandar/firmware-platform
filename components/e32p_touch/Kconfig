@@ -1,0 +1,12 @@
+menu "e32p: touch"
+
+    config E32P_TOUCH_ENABLE
+        bool "Enable e32p_touch (capacitive touch)"
+        depends on SOC_TOUCH_SENSOR_SUPPORTED
+        default n
+        help
+            Facade over the ESP32 touch sensor: init, configure a pad, and read
+            its raw capacitance value. Hidden on SoCs without a touch sensor
+            (e.g. ESP32-C3).
+
+endmenu

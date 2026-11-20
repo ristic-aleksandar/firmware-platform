@@ -1,0 +1,11 @@
+menu "e32p: gpio"
+
+    config E32P_GPIO_ENABLE
+        bool "Enable e32p_gpio (digital I/O facade)"
+        default n
+        help
+            Thin per-pin wrapper over the ESP-IDF GPIO driver with WROOM-32
+            pin-safety guards. Pin guards themselves are controlled by
+            E32P_PIN_GUARDS in the e32p_core menu.
+
+endmenu

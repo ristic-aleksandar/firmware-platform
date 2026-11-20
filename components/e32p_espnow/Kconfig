@@ -1,0 +1,13 @@
+menu "e32p: espnow"
+
+    config E32P_ESPNOW_ENABLE
+        bool "Enable e32p_espnow (peer-to-peer messaging)"
+        default n
+        # Depends on e32p_wifi to bring up the radio; select forces its source on.
+        select E32P_WIFI_ENABLE
+        help
+            Facade over ESP-NOW: connectionless peer-to-peer messaging over the
+            Wi-Fi radio (no router, no IP). Unicast to registered peers or
+            broadcast. Requires a SoC with Wi-Fi.
+
+endmenu

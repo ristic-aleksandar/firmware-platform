@@ -1,0 +1,11 @@
+menu "e32p: uart"
+
+    config E32P_UART_ENABLE
+        bool "Enable e32p_uart (UART port facade)"
+        default n
+        help
+            Opaque-handle wrapper over the ESP-IDF UART driver: one handle per
+            port, blocking write / timed read, RX buffering, and an internal
+            loopback mode for self-test without wiring.
+
+endmenu

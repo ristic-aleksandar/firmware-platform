@@ -1,0 +1,41 @@
+menu "e32p: twai"
+
+    config E32P_TWAI_ENABLE
+        bool "Enable e32p_twai (CAN 2.0 / TWAI)"
+        depends on SOC_TWAI_SUPPORTED
+        default n
+        help
+            Facade over the ESP-IDF TWAI (CAN 2.0) controller: install, start,
+            transmit and receive frames. A real bus needs an external transceiver;
+            NO_ACK mode + a self frame allows a jumper-only loopback test.
+
+    config E32P_TWAI_RX_QUEUE_LEN
+        int "TWAI driver RX queue depth (frames)"
+        depends on E32P_TWAI_ENABLE
+        range 5 64
+        default 5
+        help
+            How many received frames the driver buffers before dropping. The
+            IDF default is 5, which is ~2.5 ms of wire time at 250 kbit but only
+            ~0.6 ms at 1 Mbit - too little if a higher-priority task preempts
+            mid-burst. Raise it for high bitrates or bursty multi-frame
+            transports such as ISO-TP. Costs sizeof(twai_message_t) (~16 B) per
+            slot.
+
+    config E32P_TWAI_TX_QUEUE_LEN
+        int "TWAI driver TX queue depth (frames)"
+        depends on E32P_TWAI_ENABLE
+        range 5 64
+        default 5
+        help
+            How many frames may be queued for transmission. This bounds burst
+            throughput: a sender that refills the queue once per poll tick moves
+            at most this many frames per tick, so a shallow queue caps a
+            segmented transport regardless of bitrate. Raise it alongside the RX
+            depth when running ISO-TP at 500 kbit or 1 Mbit.
+
+            NOTE: a deeper TX queue means more frames may still be in flight
+            when you stop the controller. Drain with twai_get_status_info()
+            .msgs_to_tx before twai_stop(), or the tail of a transfer is aborted.
+
+endmenu

@@ -1,0 +1,3 @@
+# HIL bench overlay: the bench bus runs at 250 kbit (the companion board shares it).
+# CONFIG_E32P_ISOTP_BITRATE_500K is not set
+CONFIG_E32P_ISOTP_BITRATE_250K=y

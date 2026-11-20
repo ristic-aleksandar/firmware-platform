@@ -1,0 +1,23 @@
+menu "23_mqtt example"
+
+    config EXAMPLE_WIFI_SSID
+        string "Wi-Fi SSID"
+        default ""
+        help
+            Your Wi-Fi network name. Set this (and the password) with
+            `idf.py menuconfig` — credentials are not hardcoded in source.
+
+    config EXAMPLE_WIFI_PASSWORD
+        string "Wi-Fi password"
+        default ""
+        help
+            Wi-Fi passphrase. Leave empty for an open network.
+
+    config EXAMPLE_BROKER_URI
+        string "MQTT broker URI"
+        default "mqtt://test.mosquitto.org:1883"
+        help
+            Broker to connect to, e.g. mqtt://host:1883. The default is a public
+            test broker; use your own for anything real.
+
+endmenu

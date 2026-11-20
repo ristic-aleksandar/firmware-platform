@@ -1,0 +1,4 @@
+# This example uses the e32p CAN stack; enable those components' sources.
+# (E32P_J1939_ENABLE selects E32P_TWAI_ENABLE, but set both for clarity.)
+CONFIG_E32P_TWAI_ENABLE=y
+CONFIG_E32P_J1939_ENABLE=y

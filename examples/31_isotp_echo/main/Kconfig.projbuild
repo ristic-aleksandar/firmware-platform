@@ -1,0 +1,42 @@
+menu "31_isotp_echo"
+
+    choice EX31_ROLE
+        prompt "Node role"
+        default EX31_ROLE_LOOPBACK
+        help
+            LOOPBACK runs both ends in one app over an in-process queue - one
+            board, no transceiver. NODE_A and NODE_B are the two ends of a real
+            CAN bus: flash A to one board and B to the other.
+
+        config EX31_ROLE_LOOPBACK
+            bool "Loopback - both engines in one app, no bus"
+        config EX31_ROLE_NODE_A
+            bool "Node A - tester: sends the payload, verifies the echo"
+        config EX31_ROLE_NODE_B
+            bool "Node B - ECU: reassembles and echoes"
+    endchoice
+
+    config EX31_PAYLOAD_LEN
+        int "Payload length (bytes)"
+        range 1 4095
+        default 100
+        help
+            Bytes node A sends each round. 1..7 goes out as a single frame;
+            anything longer exercises FF -> FC -> CF segmentation.
+
+    config EX31_CAN_TX_GPIO
+        int "CAN TX GPIO"
+        default 4 if IDF_TARGET_ESP32S3
+        default 21
+        help
+            TWAI (CAN) TX pin, wired to the transceiver's TXD. Defaults match the
+            bench pin map per chip (WROOM 21, S3 4 - the S3 has no GPIO 22-25).
+
+    config EX31_CAN_RX_GPIO
+        int "CAN RX GPIO"
+        default 5 if IDF_TARGET_ESP32S3
+        default 22
+        help
+            TWAI (CAN) RX pin, wired to the transceiver's RXD (WROOM 22, S3 5).
+
+endmenu

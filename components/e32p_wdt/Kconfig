@@ -1,0 +1,11 @@
+menu "e32p: wdt"
+
+    config E32P_WDT_ENABLE
+        bool "Enable e32p_wdt (task watchdog)"
+        default n
+        help
+            Facade over the ESP-IDF Task Watchdog Timer: configure timeout/panic,
+            subscribe the current task, and feed it. Idempotent init that adopts
+            a system-started TWDT via reconfigure.
+
+endmenu

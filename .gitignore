@@ -1,0 +1,29 @@
+# ESP-IDF build output. Every build folder is generated: build, build_esp32s3, build_nf, ...
+build/
+build_*/
+sdkconfig.old
+sdkconfig.*.old
+managed_components/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Keys and secrets. Never commit them.
+# The signing keys in examples 28 and 33 are throwaway bench keys, and .uds_secret is the
+# PC copy of a board's UDS secret. The nested .gitignore files in those examples say the same.
+*.pem
+*.key
+*.p12
+*.pfx
+.uds_secret
+.uds_secret.*
+
+# Local machine settings
+.claude/
+.vscode/
+
+# Private product and business notes. The owner keeps them out of the public repo.
+docs/ideas/

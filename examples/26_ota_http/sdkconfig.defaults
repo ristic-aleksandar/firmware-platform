@@ -1,0 +1,24 @@
+# Defaults for the 26_ota_http example.
+
+# 4 MB flash with the platform's dual-OTA partition table.
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="../../partitions.csv"
+
+# Confirm-or-rollback a freshly pulled image (the demo calls mark_valid()).
+CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE=y
+
+# esp_https_ota runs in the main task; give it headroom.
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=8192
+
+# TESTING ONLY — allow OTA over plain HTTP (no TLS, no server authentication).
+# Needed for a local `python -m http.server` test. A man-in-the-middle could push
+# malicious firmware, so DO NOT ship this: for production remove this line, serve
+# over https:// with a verified certificate, and enable Secure Boot v2.
+# See components/e32p_ota/README.md ("Security & production hardening").
+CONFIG_ESP_HTTPS_OTA_ALLOW_HTTP=y
+
+# Cherry-pick the modules this example uses.
+CONFIG_E32P_WIFI_ENABLE=y
+CONFIG_E32P_OTA_ENABLE=y
+CONFIG_E32P_NVS_ENABLE=y

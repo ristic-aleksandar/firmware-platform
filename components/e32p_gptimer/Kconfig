@@ -1,0 +1,11 @@
+menu "e32p: gptimer"
+
+    config E32P_GPTIMER_ENABLE
+        bool "Enable e32p_gptimer (general-purpose timer)"
+        default n
+        help
+            Facade over the ESP-IDF general-purpose hardware timer: a periodic or
+            one-shot alarm with an ISR callback, plus raw count read. One handle
+            per timer.
+
+endmenu

@@ -1,0 +1,4 @@
+# HIL agent overlay: normal-fixed 29-bit addressing. Apply after sdkconfig.defaults with its own -B dir and
+# its own -D SDKCONFIG file - see docs/tickets/diagnostics-stack.md section 7.
+# CONFIG_E32P_ISOTP_ADDRESSING_NORMAL_11 is not set
+CONFIG_E32P_ISOTP_ADDRESSING_NORMAL_FIXED=y

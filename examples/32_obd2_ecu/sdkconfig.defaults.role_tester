@@ -1,0 +1,2 @@
+# Role overlay: the tester that polls the ECU and prints what it gets.
+CONFIG_EX32_ROLE_TESTER=y

@@ -1,0 +1,27 @@
+menu "e32p: obd2"
+
+    config E32P_OBD2_ENABLE
+        bool "Enable e32p_obd2 (SAE J1979 / ISO 15765-4 OBD-II services)"
+        depends on SOC_TWAI_SUPPORTED
+        select E32P_ISOTP_ENABLE
+        default n
+        help
+            OBD-II services over ISO-TP: current data (0x01), freeze frame
+            (0x02), stored and pending trouble codes (0x03 / 0x07), clear
+            (0x04), and vehicle information (0x09).
+
+            The service layer is pure - one request in, one response out, with
+            no clock and no bus - so every service is testable headless. Only
+            the thin transport glue touches ISO-TP.
+
+    config E32P_OBD2_MAX_DTC
+        int "Diagnostic trouble codes the store holds"
+        depends on E32P_OBD2_ENABLE
+        range 1 32
+        default 10
+        help
+            Each code costs 3 bytes of RAM and 5 characters in the NVS string
+            that survives a reset. A real ECU holds far more; 10 is enough for
+            a demo and keeps the store one short write.
+
+endmenu

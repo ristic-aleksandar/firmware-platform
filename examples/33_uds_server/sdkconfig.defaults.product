@@ -1,0 +1,61 @@
+# PRODUCT overlay for example 33 (UDS ECU). Use it LAST, after the other defaults:
+#   SDKCONFIG_DEFAULTS = sdkconfig.defaults;sdkconfig.defaults.ota1m;sdkconfig.defaults.product
+# It is NOT a bench configuration. Do not flash a build made with it to a bench board:
+# on first boot the bootloader burns eFuses (Secure Boot, Flash Encryption, ROM download
+# mode off, JTAG off). Those burns cannot be undone. Use a sacrificial board, only after
+# docs/SECURITY_HARDENING.md ("Product overlay and the owner-run burn procedure").
+# Using it burns nothing at build time. It is for a build check, or for the owner's burn.
+#
+# Open items this overlay does NOT solve (see docs/SECURITY_HARDENING.md, owner actions):
+#  - UDS secret provisioning (baseline item 1): the console path stays as on the bench
+#    (one-time, refused if a secret is already in NVS). A product needs its own ingest
+#    path and a policy for the PC-side copy. Nothing new is added here on purpose.
+#    CONFIG_EX33_CONSOLE_PROVISIONING stays on; turning it off leaves no way to put a
+#    secret on the board.
+#  - The ESP32 keeps one Secure Boot v2 key digest and cannot revoke it.
+
+# Marks the build as a product. Bench-only code (HIL agent, demos) then stops with #error.
+CONFIG_E32P_PRODUCT_BUILD=y
+
+# Secure Boot v2 (RSA-3072) needs chip revision 3.0 or newer.
+CONFIG_ESP32_REV_MIN_3=y
+
+# Replace the bench ECDSA signing from sdkconfig.defaults.ota1m with Secure Boot v2 (RSA).
+# CONFIG_SECURE_SIGNED_APPS_NO_SECURE_BOOT is not set
+# CONFIG_SECURE_SIGNED_ON_UPDATE_NO_SECURE_BOOT is not set
+# CONFIG_SECURE_SIGNED_APPS_ECDSA_SCHEME is not set
+CONFIG_SECURE_BOOT=y
+CONFIG_SECURE_BOOT_V2_ENABLED=y
+CONFIG_SECURE_SIGNED_APPS_RSA_SCHEME=y
+
+# No signing key in the build. Images are signed in a separate step (a signing service
+# or HSM, with espsecure sign_data --version 2). Nothing here needs a key file.
+# CONFIG_SECURE_BOOT_BUILD_SIGNED_BINARIES is not set
+
+# Flash Encryption, Release mode (irreversible), and an encrypted NVS for the UDS secret.
+CONFIG_SECURE_FLASH_ENC_ENABLED=y
+CONFIG_SECURE_FLASH_ENCRYPTION_MODE_RELEASE=y
+CONFIG_NVS_ENCRYPTION=y
+# Keep the app-start check: an app-only flash onto a board without Flash Encryption stops
+# there, before the app burns ROM download mode off. (This is the IDF default; pinned.)
+CONFIG_SECURE_FLASH_CHECK_ENC_EN_IN_APP=y
+
+# UART ROM download mode permanently off. JTAG stays off: Secure Boot and Flash
+# Encryption Release disable it, and the "allow JTAG" option is not selected.
+CONFIG_SECURE_DISABLE_ROM_DL_MODE=y
+
+# Warnings and errors only, in the app and in the bootloader.
+CONFIG_LOG_DEFAULT_LEVEL_WARN=y
+CONFIG_BOOTLOADER_LOG_LEVEL_WARN=y
+
+# Reflash goes into the other OTA slot (same as the ota1m overlay).
+# CONFIG_EX33_SINK_RAM is not set
+CONFIG_EX33_SINK_OTA=y
+
+# Same table as the platform one, plus the nvs_keys partition. The OTA slots and the
+# storage partition stay where they are. The partition table moves to 0xf000 because
+# the Secure Boot v2 + Flash Encryption bootloader (about 40 KB) does not fit below the
+# default 0x8000 (the build stops: "Bootloader binary size ... too large").
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="../../partitions_product.csv"
+CONFIG_PARTITION_TABLE_OFFSET=0xf000

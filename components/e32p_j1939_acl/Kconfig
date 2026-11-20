@@ -1,0 +1,17 @@
+menu "e32p: j1939_acl"
+
+    config E32P_J1939_ACL_ENABLE
+        bool "Enable e32p_j1939_acl (J1939-81 address claiming)"
+        depends on SOC_TWAI_SUPPORTED
+        select E32P_J1939_ENABLE
+        default n
+        help
+            SAE J1939-81 address claiming over e32p_j1939: pack/unpack the 64-bit
+            NAME, claim a source address, defend it by NAME arbitration (lower
+            NAME wins), answer Requests for Address Claimed, and on a lost claim
+            relocate (if arbitrary-address-capable) or report Cannot Claim. Same
+            injected-sink + poll(now_ms) design as e32p_j1939tp, so it runs
+            headless and is fully unit-testable. Selecting this pulls in
+            e32p_j1939 (and TWAI).
+
+endmenu

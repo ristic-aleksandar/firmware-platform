@@ -8,8 +8,9 @@ watchdog-fed heartbeat. Proves the rest of the M2 spine: `e32p_sysinfo` and
 
 ```powershell
 . C:\Espressif\Initialize-Idf.ps1 -IdfId esp-idf-ab7213b7273352b64422b1f400ff27a0
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\03_sysinfo_wdt set-target esp32
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\03_sysinfo_wdt -p COM5 build flash monitor
+# From the repository root
+idf.py -C examples\03_sysinfo_wdt set-target esp32
+idf.py -C examples\03_sysinfo_wdt -p COM5 build flash monitor
 ```
 
 Expected at boot:

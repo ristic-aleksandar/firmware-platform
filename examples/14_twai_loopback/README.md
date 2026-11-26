@@ -8,8 +8,9 @@ frame needs a wire from TX (GPIO21) to RX (GPIO22), or an external transceiver.
 
 ```powershell
 . C:\Espressif\Initialize-Idf.ps1 -IdfId esp-idf-ab7213b7273352b64422b1f400ff27a0
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\14_twai_loopback set-target esp32
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\14_twai_loopback -p COM5 build flash monitor
+# From the repository root
+idf.py -C examples\14_twai_loopback set-target esp32
+idf.py -C examples\14_twai_loopback -p COM5 build flash monitor
 ```
 
 ### Bare board (TX path only)

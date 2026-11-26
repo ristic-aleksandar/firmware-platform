@@ -28,7 +28,8 @@ Set up the environment first:
 
 ```powershell
 . C:\Espressif\Initialize-Idf.ps1 -IdfId esp-idf-ab7213b7273352b64422b1f400ff27a0
-$EX = "C:\Users\aleks\Work\esp32_platform\examples\31_isotp_echo"
+# From the repository root
+$EX = "examples\31_isotp_echo"
 ```
 
 **Loopback** — any single board (here the WROOM on COM5):

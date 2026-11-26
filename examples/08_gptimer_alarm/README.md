@@ -8,8 +8,9 @@ No external parts.
 
 ```powershell
 . C:\Espressif\Initialize-Idf.ps1 -IdfId esp-idf-ab7213b7273352b64422b1f400ff27a0
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\08_gptimer_alarm set-target esp32
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\08_gptimer_alarm -p COM5 build flash monitor
+# From the repository root
+idf.py -C examples\08_gptimer_alarm set-target esp32
+idf.py -C examples\08_gptimer_alarm -p COM5 build flash monitor
 ```
 
 Expected — `alarms` ticks up once per second. Because `auto_reload` re-arms the

@@ -8,8 +8,9 @@ on a bare board); the byte-for-byte match is `PASS` only with the jumper.
 
 ```powershell
 . C:\Espressif\Initialize-Idf.ps1 -IdfId esp-idf-ab7213b7273352b64422b1f400ff27a0
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\06_spi_loopback set-target esp32
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\06_spi_loopback -p COM5 build flash monitor
+# From the repository root
+idf.py -C examples\06_spi_loopback set-target esp32
+idf.py -C examples\06_spi_loopback -p COM5 build flash monitor
 ```
 
 Without a jumper (bare board):

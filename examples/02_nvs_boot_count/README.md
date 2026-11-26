@@ -8,8 +8,9 @@ Proves the M2 substrate: `e32p_nvs` (the count survives resets) and
 
 ```powershell
 . C:\Espressif\Initialize-Idf.ps1 -IdfId esp-idf-ab7213b7273352b64422b1f400ff27a0
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\02_nvs_boot_count set-target esp32
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\02_nvs_boot_count -p COM5 build flash monitor
+# From the repository root
+idf.py -C examples\02_nvs_boot_count set-target esp32
+idf.py -C examples\02_nvs_boot_count -p COM5 build flash monitor
 ```
 
 Expected — the count increments by one on every reset:

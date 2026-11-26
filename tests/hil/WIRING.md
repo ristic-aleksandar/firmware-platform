@@ -430,7 +430,8 @@ the bus.
 ### 12.3 Automated CANable tests
 
 ```powershell
-cd C:\Users\aleks\Work\esp32_platform\tests\hil\host
+# From the repository root
+cd tests\hil\host
 .venv\Scripts\python.exe -m pytest test_isotp_canable.py test_obd2_canable.py test_uds_canable.py --port COM5 --companion-port COM7 --canable COM8
 ```
 

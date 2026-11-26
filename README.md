@@ -115,17 +115,6 @@ Last full run (bench: ESP32-WROOM-32 DUT, ESP32-S3 companion, CAN adapter):
 These counts only show that the code does what its own tests expect. They are not
 a conformance or certification result.
 
-## Security
-
-The platform had a security audit (14 findings, verdict **blocking** for any
-product use). Fixes for most findings were made and re-tested on the bench; the
-rest are tracked as open items. Read
-[`docs/security/audit-2026-10-07-full.md`](docs/security/audit-2026-10-07-full.md)
-and [`docs/SECURITY_HARDENING.md`](docs/SECURITY_HARDENING.md) before reusing any
-part. In short: audited, fixes verified on the bench, open items tracked. Nothing
-here is certified secure. Secure Boot, flash encryption, per-device secrets and
-BLE pairing are documented for a future product and are **not** enabled.
-
 ## License
 
 [MIT](LICENSE). The software is provided "as is", without warranty of any kind.

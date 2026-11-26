@@ -9,8 +9,9 @@ needed, no external hardware required.
 
 ```powershell
 . C:\Espressif\Initialize-Idf.ps1 -IdfId esp-idf-ab7213b7273352b64422b1f400ff27a0
-idf.py -C C:\Users\aleks\Work\esp32_platform\tests\unit_runner set-target esp32
-idf.py -C C:\Users\aleks\Work\esp32_platform\tests\unit_runner -p COM5 build flash monitor
+# From the repository root
+idf.py -C tests\unit_runner set-target esp32
+idf.py -C tests\unit_runner -p COM5 build flash monitor
 ```
 
 `TEST_COMPONENTS` is set in the project `CMakeLists.txt`, so a plain

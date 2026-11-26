@@ -8,8 +8,9 @@ the PCNT input, so toggling the pin generates countable edges.
 
 ```powershell
 . C:\Espressif\Initialize-Idf.ps1 -IdfId esp-idf-ab7213b7273352b64422b1f400ff27a0
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\11_pcnt_count set-target esp32
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\11_pcnt_count -p COM5 build flash monitor
+# From the repository root
+idf.py -C examples\11_pcnt_count set-target esp32
+idf.py -C examples\11_pcnt_count -p COM5 build flash monitor
 ```
 
 Expected — the count exactly equals the pulses generated each cycle:

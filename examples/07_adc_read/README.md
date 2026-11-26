@@ -7,8 +7,9 @@ Reads an ADC1 channel (GPIO34) and logs raw count + calibrated millivolts. Prove
 
 ```powershell
 . C:\Espressif\Initialize-Idf.ps1 -IdfId esp-idf-ab7213b7273352b64422b1f400ff27a0
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\07_adc_read set-target esp32
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\07_adc_read -p COM5 build flash monitor
+# From the repository root
+idf.py -C examples\07_adc_read set-target esp32
+idf.py -C examples\07_adc_read -p COM5 build flash monitor
 ```
 
 Expected:

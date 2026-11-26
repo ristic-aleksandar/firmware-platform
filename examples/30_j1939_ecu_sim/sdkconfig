@@ -2012,6 +2012,7 @@ CONFIG_WIFI_PROV_STA_ALL_CHANNEL_SCAN=y
 # e32p: core (platform-wide)
 #
 CONFIG_E32P_PIN_GUARDS=y
+# CONFIG_E32P_PRODUCT_BUILD is not set
 # end of e32p: core (platform-wide)
 
 #
@@ -2056,6 +2057,12 @@ CONFIG_E32P_PIN_GUARDS=y
 # end of e32p: i2s
 
 #
+# e32p: isotp
+#
+# CONFIG_E32P_ISOTP_ENABLE is not set
+# end of e32p: isotp
+
+#
 # e32p: j1939
 #
 CONFIG_E32P_J1939_ENABLE=y
@@ -2096,6 +2103,12 @@ CONFIG_E32P_J1939_ENABLE=y
 #
 # CONFIG_E32P_NVS_ENABLE is not set
 # end of e32p: nvs
+
+#
+# e32p: obd2
+#
+# CONFIG_E32P_OBD2_ENABLE is not set
+# end of e32p: obd2
 
 #
 # e32p: ota
@@ -2143,6 +2156,8 @@ CONFIG_E32P_J1939_ENABLE=y
 # e32p: twai
 #
 CONFIG_E32P_TWAI_ENABLE=y
+CONFIG_E32P_TWAI_RX_QUEUE_LEN=5
+CONFIG_E32P_TWAI_TX_QUEUE_LEN=5
 # end of e32p: twai
 
 #
@@ -2150,6 +2165,12 @@ CONFIG_E32P_TWAI_ENABLE=y
 #
 # CONFIG_E32P_UART_ENABLE is not set
 # end of e32p: uart
+
+#
+# e32p: uds
+#
+# CONFIG_E32P_UDS_ENABLE is not set
+# end of e32p: uds
 
 #
 # e32p: wdt

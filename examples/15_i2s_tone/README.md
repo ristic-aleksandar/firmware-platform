@@ -7,8 +7,9 @@ proves the TX/clock path; wire a MAX98357A amp and you'll hear the tone.
 
 ```powershell
 . C:\Espressif\Initialize-Idf.ps1 -IdfId esp-idf-ab7213b7273352b64422b1f400ff27a0
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\15_i2s_tone set-target esp32
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\15_i2s_tone -p COM5 build flash monitor
+# From the repository root
+idf.py -C examples\15_i2s_tone set-target esp32
+idf.py -C examples\15_i2s_tone -p COM5 build flash monitor
 ```
 
 Expected (bare board):

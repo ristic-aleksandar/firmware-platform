@@ -14,8 +14,9 @@ opaque-handle lifecycle (`init` → `start`), hardware fade, and status read.
 
 ```powershell
 . C:\Espressif\Initialize-Idf.ps1 -IdfId esp-idf-ab7213b7273352b64422b1f400ff27a0
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\01_pwm_fade set-target esp32
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\01_pwm_fade -p COM5 build flash monitor
+# From the repository root
+idf.py -C examples\01_pwm_fade set-target esp32
+idf.py -C examples\01_pwm_fade -p COM5 build flash monitor
 ```
 
 Expected serial output (repeats):

@@ -15,8 +15,9 @@ does not share that pad) works reliably — hence the single jumper.
 
 ```powershell
 . C:\Espressif\Initialize-Idf.ps1 -IdfId esp-idf-ab7213b7273352b64422b1f400ff27a0
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\09_dac_adc_loopback set-target esp32
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\09_dac_adc_loopback -p COM5 build flash monitor
+# From the repository root
+idf.py -C examples\09_dac_adc_loopback set-target esp32
+idf.py -C examples\09_dac_adc_loopback -p COM5 build flash monitor
 ```
 
 Without the jumper, GPIO34 floats — the ADC reads near 0 and does not track. With

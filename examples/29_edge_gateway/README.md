@@ -188,8 +188,9 @@ bus`. Everything downstream of the source is identical, so no other code changes
 ## Build & run
 
 ```powershell
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\29_edge_gateway set-target esp32
-idf.py -C C:\Users\aleks\Work\esp32_platform\examples\29_edge_gateway -p COM5 build flash monitor
+# From the repository root
+idf.py -C examples\29_edge_gateway set-target esp32
+idf.py -C examples\29_edge_gateway -p COM5 build flash monitor
 ```
 
 **Fast bench path (skip the phone):** set the fallback credentials in

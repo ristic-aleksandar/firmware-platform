@@ -177,8 +177,7 @@ The generated `sdkconfig.h` of that build shows `CONFIG_E32P_PRODUCT_BUILD 1` an
 example 28 and example 29 stop on their own `#error`. A product build of example 33
 *without* signed-on-update stops on the `e32p_ota` check ("a product build must verify
 image signatures"). Evidence: the scratch build logs of 2026-11-03, which are kept outside
-this repository. The auditor's slice J check is in `docs/security/audit-2026-10-07-full.md`,
-section "Re-test — slices J and K, final status (2026-11-03)".
+this repository.
 
 **The partition table moves (a measured change).** With Secure Boot v2 and Flash
 Encryption the unsigned bootloader is 40,960 bytes at log level WARN (49,152 at INFO).

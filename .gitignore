@@ -27,3 +27,4 @@ __pycache__/
 
 # Private product and business notes. The owner keeps them out of the public repo.
 docs/ideas/
+docs/security/
